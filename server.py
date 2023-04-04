@@ -129,12 +129,25 @@ def create_class()-> None:
 @app.route('/users',methods=["PUT"])
 def update_user()-> None:
     """ 유저정보 업데이트"""
-    pass
+    user_id = request.args.get('user_id')
+    data = request.get_json()
 
-@app.route('/enrollment',methods=['DELETE'])
-def delete_enrollment()-> None:
-    """ 수강 취소 """
-    pass
+    # 데이터가 정상적으로 들어왔는지 체크
+    if not user_id:
+        return {'Error': {'statusCode':403,'message':'요청된 데이터가 없습니다'}}
+    
+    # 데이터 유효한지 체크
+    required_keys : List[str] = ['name','email','phone','birthdate']
+    if all(key in data for key in required_keys) and len(required_keys) == len(data):    
+        # 데이터 수정 요청
+        update_query : str = f"""
+        UPDATE user SET name = {data['name']} AND
+        """.strip()
+        
+        """ 데이터 변경 쿼리 모르겠어서 일단 보류 """
+        return 'Ok'
+    else:
+        return {"Error": {"message": "유효한 데이터가 아닙니다"}}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
