@@ -94,9 +94,8 @@ def enrolment()-> str:
             insert_query : str = f"""
             INSERT INTO enrollment (class_id,user_id) VALUES ({data['class_id']},{data['user_id']});
             """.strip()
-            crud.insert(insert_query=insert_query)
-            
-            return json.dumps(data,ensure_ascii=False)
+            crud.insert(insert_query=insert_query)            
+            return {"statusCode":200,"message":"Created!"}
         except:
             return {"Error": {'message':'데이터를 저장하는 도중 에러가 발생하였습니다\n자세한 사항은 어드민에게 연락바랍니다'}}
     else:
@@ -120,7 +119,7 @@ def create_class()-> None:
             INSERT INTO class (class_name,code,professor_id) VALUES (
                 "{data['class_name']}",{data['code']},{data['professor_id']});""".strip()
             crud.insert(insert_query=insert_query)
-            return json.dumps(data,ensure_ascii=False)
+            return {"statusCode":200,"message":"Created!"}
         except:
             return {"Error": {'message':'데이터를 저장하는 도중 에러가 발생하였습니다\n자세한 사항은 어드민에게 연락바랍니다'}}            
     else:
@@ -144,7 +143,7 @@ def update_user()-> None:
         UPDATE user SET name = {data['name']} AND
         """.strip()
         
-        """ 데이터 변경 쿼리 모르겠어서 일단 보류 """
+        """ 데이터 수정 쿼리 공부한 후 수정 """
         return 'Ok'
     else:
         return {"Error": {"message": "유효한 데이터가 아닙니다"}}
